@@ -205,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
       openSnackbar(context, "Check your Internet connection", Colors.red);
       facebookController.reset();
     } else {
-      await sp.signInWithGoogle().then((value) {
+      await sp.signInWithFacebook().then((value) {
         if (sp.hashError == true) {
           openSnackbar(context, sp.errorCode.toString(), Colors.red);
           facebookController.reset();

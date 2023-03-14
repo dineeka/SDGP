@@ -11,14 +11,21 @@
 			<array>
 				<!-- TODO Replace this value: -->
 				<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
+				<string>722001262960248</string>
 				<string>com.googleusercontent.apps.741614788236-i807bujs4td9psvj8eqcgsqc3fqv3oaq</string>
 			</array>
 		</dict>
 	</array>
+	<key>FacebookAppID</key>
+	<string>722001262960248</string>
+	<key>FacebookClientToken</key>
+	<string>18554233bfc3472aec719f3a12517d09</string>
+	<key>FacebookDisplayName</key>
+	<string>sdgp</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Sdgp</string>
+	<string>SDGP</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
