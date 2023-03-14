@@ -217,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
               await sp.getUserDataFromFirestore(sp.uid).then((value) => sp
                   .saveDataToSharedPreferences()
                   .then((value) => sp.setSignIn().then((value) {
-                        googleController.success();
+                        facebookController.success();
                         handleAfterSingIn();
                       })));
             } else {
@@ -225,7 +225,7 @@ class _LoginScreenState extends State<LoginScreen> {
               sp.saveDataToFirestore().then((value) => sp
                   .saveDataToSharedPreferences()
                   .then((value) => sp.setSignIn().then((value) {
-                        googleController.success();
+                        facebookController.success();
                         handleAfterSingIn();
                       })));
             }
