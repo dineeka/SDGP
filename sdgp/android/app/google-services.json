@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "741614788236",
+    "project_id": "sdgp-c3754",
+    "storage_bucket": "sdgp-c3754.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741614788236:android:482c8cb5f78450166665a9",
+        "android_client_info": {
+          "package_name": "com.example.sdgp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741614788236-eb5pbi4ud51molhhe7t0195ghclci9cn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sdgp",
+            "certificate_hash": "0d966de64328e432e069bfb95c9e5fa07c02e9f2"
+          }
+        },
+        {
+          "client_id": "741614788236-emk9on0oc7uddlj1ajs2p6rsbhnak2ch.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoHvRTcf2tl0KaF762KP18wdh9DEf8MJ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "741614788236-emk9on0oc7uddlj1ajs2p6rsbhnak2ch.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "741614788236-i807bujs4td9psvj8eqcgsqc3fqv3oaq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sdgp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
