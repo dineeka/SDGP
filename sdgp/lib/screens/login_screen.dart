@@ -127,7 +127,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   elevation: 0,
                   borderRadius: 25,
                   color: Colors.blue,
-                  onPressed: () {},
+                  onPressed: () {
+                    handleFacebookAuth();
+                  },
                   child: Wrap(
                     children: const [
                       Icon(
@@ -167,6 +169,46 @@ class _LoginScreenState extends State<LoginScreen> {
         if (sp.hashError == true) {
           openSnackbar(context, sp.errorCode.toString(), Colors.red);
           googleController.reset();
+        } else {
+          //checking whether user exists or not
+          sp.checkUserExists().then((value) async {
+            if (value == true) {
+              // user exists
+              await sp.getUserDataFromFirestore(sp.uid).then((value) => sp
+                  .saveDataToSharedPreferences()
+                  .then((value) => sp.setSignIn().then((value) {
+                        googleController.success();
+                        handleAfterSingIn();
+                      })));
+            } else {
+              // user does not exist
+              sp.saveDataToFirestore().then((value) => sp
+                  .saveDataToSharedPreferences()
+                  .then((value) => sp.setSignIn().then((value) {
+                        googleController.success();
+                        handleAfterSingIn();
+                      })));
+            }
+          });
+        }
+      });
+    }
+  }
+
+  //handling facbook auth
+  Future handleFacebookAuth() async {
+    final sp = context.read<SignInProvider>();
+    final ip = context.read<InternetProvider>();
+    await ip.checkInternetConnection();
+
+    if (ip.hasInternet == false) {
+      openSnackbar(context, "Check your Internet connection", Colors.red);
+      facebookController.reset();
+    } else {
+      await sp.signInWithGoogle().then((value) {
+        if (sp.hashError == true) {
+          openSnackbar(context, sp.errorCode.toString(), Colors.red);
+          facebookController.reset();
         } else {
           //checking whether user exists or not
           sp.checkUserExists().then((value) async {
