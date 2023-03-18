@@ -5,6 +5,7 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:sdgp/provider/internet_provider.dart';
 import 'package:sdgp/provider/sign_in_provider.dart';
 import 'package:sdgp/screens/home_screen.dart';
+import 'package:sdgp/screens/home_screen_new.dart';
 import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/const.dart';
 import 'package:sdgp/utils/next_screen.dart';
@@ -238,7 +239,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // handle after signIn
   handleAfterSingIn() {
     Future.delayed(const Duration(milliseconds: 1000)).then((value) {
-      nextScreenReplace(context, const HomeScreen());
+      nextScreenReplace(context, const HomeScreenNew());
     });
   }
 }

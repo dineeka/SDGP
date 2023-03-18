@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sdgp/provider/sign_in_provider.dart';
 import 'package:sdgp/screens/home_screen.dart';
+import 'package:sdgp/screens/home_screen_new.dart';
 import 'package:sdgp/screens/login_screen.dart';
 import 'package:sdgp/utils/config.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 2), () {
       sp.isSingedIn == false
           ? nextScreen(context, const LoginScreen())
-          : nextScreen(context, const HomeScreen());
+          : nextScreen(context, const HomeScreenNew());
     });
   }
 
