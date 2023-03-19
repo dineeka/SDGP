@@ -227,4 +227,14 @@ class SignInProvider extends ChangeNotifier {
     final SharedPreferences s = await SharedPreferences.getInstance();
     s.clear();
   }
+
+  void phoneNumberUsers(User user, email, name) {
+    _name = name;
+    _email = email;
+    _imageUrl =
+        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwinaero.com%2Fdefault-user-account-picture-windows-10%2F&psig=AOvVaw1dZjaJx39tUer-5ZO9wUCh&ust=1679299124865000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCJjek_DC5_0CFQAAAAAdAAAAABAE";
+    _uid = user.phoneNumber;
+    _provider = "PHONE";
+    notifyListeners();
+  }
 }

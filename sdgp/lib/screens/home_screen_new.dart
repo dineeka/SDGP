@@ -3,10 +3,13 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:sdgp/screens/cost_estimation.dart';
 import 'package:sdgp/screens/home_screen.dart';
+import 'package:sdgp/screens/login_screen.dart';
 import 'package:sdgp/utils/const.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/next_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:sdgp/provider/sign_in_provider.dart';
 
 class HomeScreenNew extends StatefulWidget {
   const HomeScreenNew({super.key});
@@ -16,9 +19,21 @@ class HomeScreenNew extends StatefulWidget {
 }
 
 class _HomeScreenNewState extends State<HomeScreenNew> {
+  Future getData() async {
+    final sp = context.read<SignInProvider>();
+    sp.getDataFromSharedPreferences();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
   final GlobalKey _scaffoldKey1 = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    final sp = context.read<SignInProvider>();
     return Scaffold(
       key: _scaffoldKey1,
       backgroundColor: kBackgroundColor,
@@ -158,13 +173,42 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  //Logout button
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      sp.userSignOut();
+                      nextScreen(context, LoginScreen());
+                    },
+                    child: Text(
+                      "   Logout   ",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                    ),
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 160, 130, 13)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 239, 232, 205)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          side: BorderSide(
+                            color: Color.fromARGB(255, 239, 232, 205),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   const Spacer(),
                   TextButton(
                     onPressed: () {
                       nextScreen(context, CostEstimation());
                     },
                     child: Text(
-                      "Proceed",
+                      "   Proceed   ",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                     ),
@@ -181,7 +225,9 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                                         color: Color.fromARGB(
                                             255, 160, 130, 13))))),
                   ),
-                  const Spacer()
+                  const SizedBox(
+                    width: 20,
+                  ),
                 ],
               )
             ],

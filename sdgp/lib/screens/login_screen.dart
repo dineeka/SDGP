@@ -6,6 +6,7 @@ import 'package:sdgp/provider/internet_provider.dart';
 import 'package:sdgp/provider/sign_in_provider.dart';
 import 'package:sdgp/screens/home_screen.dart';
 import 'package:sdgp/screens/home_screen_new.dart';
+import 'package:sdgp/screens/phoneauth_screen.dart';
 import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/const.dart';
 import 'package:sdgp/utils/next_screen.dart';
@@ -24,6 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
       RoundedLoadingButtonController();
   final RoundedLoadingButtonController facebookController =
       RoundedLoadingButtonController();
+  final RoundedLoadingButtonController phoneController =
+      RoundedLoadingButtonController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +34,12 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: kBackgroundColor,
       body: Container(
         decoration: const BoxDecoration(
+          image: DecorationImage(
+              alignment: Alignment.center,
+              scale: 0.5,
+              opacity: 0.1,
+              image: AssetImage(Config.app_logo),
+              fit: BoxFit.cover),
           gradient: LinearGradient(
             colors: [
               Color.fromARGB(255, 201, 143, 34),
@@ -143,6 +152,38 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Text(
                         "Sign in with Facebook",
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      )
+                    ],
+                  ),
+                ),
+                //Phone number sign in button
+                const SizedBox(
+                  height: 20,
+                ),
+                RoundedLoadingButton(
+                  controller: phoneController,
+                  successColor: Color.fromARGB(255, 0, 0, 0),
+                  width: MediaQuery.of(context).size.width * 0.80,
+                  elevation: 0,
+                  borderRadius: 25,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                  onPressed: () {
+                    nextScreenReplace(context, PhoneAuthScreen());
+                    phoneController.reset();
+                  },
+                  child: Wrap(
+                    children: const [
+                      Icon(
+                        FontAwesomeIcons.phone,
+                        size: 25,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        "Sign in with Phone",
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       )
                     ],
