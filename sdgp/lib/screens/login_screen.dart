@@ -91,6 +91,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     "Please Login",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                   ),
+                  Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image(
+                        image: AssetImage(Config.bottom_logo),
+                        height: 200,
+                        width: 300,
+                        fit: BoxFit.cover,
+                      ),
+                    ],
+                  ),
+                  Spacer(),
                 ],
               ),
             ),
