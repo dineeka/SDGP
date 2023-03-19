@@ -34,6 +34,7 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: kBackgroundColor,
       body: Container(
         constraints: BoxConstraints.expand(),
