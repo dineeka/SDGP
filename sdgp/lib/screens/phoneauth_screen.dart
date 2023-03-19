@@ -211,16 +211,9 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Image(
-                  //   image: AssetImage(Config.app_logo),
-                  //   height: 100,
-                  //   width: 100,
-                  //   fit: BoxFit.cover,
-                  // ),
-                  // const Spacer(),
                   Image(
                     image: AssetImage(Config.bottom_logo),
-                    height: 80,
+                    height: 100,
                     width: 200,
                     fit: BoxFit.cover,
                   ),
@@ -230,19 +223,23 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Image(
-                  //   image: AssetImage(Config.app_logo),
-                  //   height: 100,
-                  //   width: 100,
-                  //   fit: BoxFit.cover,
-                  // ),
-                  // const Spacer(),
+                  const Spacer(),
+                  Image(
+                    image: AssetImage(Config.app_logo),
+                    height: 30,
+                    width: 30,
+                    fit: BoxFit.cover,
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Image(
                     image: AssetImage(Config.name_logo),
                     height: 80,
                     width: 200,
                     fit: BoxFit.cover,
                   ),
+                  const Spacer(),
                 ],
               ),
             ],
