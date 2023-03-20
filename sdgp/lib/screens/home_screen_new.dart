@@ -35,6 +35,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
   Widget build(BuildContext context) {
     final sp = context.read<SignInProvider>();
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _scaffoldKey1,
       backgroundColor: kBackgroundColor,
       body: Container(
