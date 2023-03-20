@@ -30,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       key: _scaffoldKey,
       backgroundColor: kBackgroundColor,
       body: Container(
@@ -93,6 +94,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image(
+                  image: AssetImage(Config.bottom_logo),
+                  height: 200,
+                  width: 300,
+                  fit: BoxFit.cover,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 50,
             ),
             //Login buttons
             Column(
