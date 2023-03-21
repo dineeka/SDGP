@@ -10,6 +10,7 @@ import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/next_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:sdgp/provider/sign_in_provider.dart';
+import 'package:video_player/video_player.dart';
 
 class HomeScreenNew extends StatefulWidget {
   const HomeScreenNew({super.key});
@@ -19,6 +20,8 @@ class HomeScreenNew extends StatefulWidget {
 }
 
 class _HomeScreenNewState extends State<HomeScreenNew> {
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
   Future getData() async {
     final sp = context.read<SignInProvider>();
     sp.getDataFromSharedPreferences();
@@ -28,6 +31,15 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
   void initState() {
     super.initState();
     getData();
+    _controller = VideoPlayerController.asset('assets/VideoTutorial.mp4');
+    _initializeVideoPlayerFuture = _controller.initialize();
+    _controller.setLooping(true);
+  }
+
+  @override
+  void dispose(){
+    _controller.dispose();
+    super.dispose();
   }
 
   final GlobalKey _scaffoldKey1 = GlobalKey<ScaffoldState>();
@@ -89,12 +101,25 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                         ),
                       ],
                     ),
-                    Image(
+                    AspectRatio(
+                        aspectRatio: _controller.value.aspectRatio,
+                      child: FutureBuilder(
+                        future: _initializeVideoPlayerFuture,
+                        builder: (context, snapshot){
+                          if(snapshot.connectionState == ConnectionState.done){
+                            return VideoPlayer(_controller);
+                          }else{
+                            return Center(child: CircularProgressIndicator());
+                          }
+                        },
+                      ),
+                    ),
+                    /*Image(
                       image: AssetImage("assets/car1.png"),
                       height: 350,
                       width: 400,
                       fit: BoxFit.cover,
-                    ),
+                    ),*/
                     Row(
                       children: const [
                         Icon(
@@ -125,7 +150,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                           width: 10,
                         ),
                         Text(
-                          "Adjust focus and exposure for the perfect photos",
+                          "Use gridlines to balance your shot.",
                           style: TextStyle(color: kIconColor),
                         )
                       ],
@@ -144,7 +169,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                           width: 10,
                         ),
                         Text(
-                          "Adjust focus and exposure for the perfect photos",
+                          "Take photos with steady hands or make use of tripods.",
                           style: TextStyle(color: kIconColor),
                         )
                       ],
@@ -163,7 +188,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                           width: 10,
                         ),
                         Text(
-                          "Adjust focus and exposure for the perfect photos",
+                          "Take photos of the car symmetrically.",
                           style: TextStyle(color: kIconColor),
                         )
                       ],
@@ -171,6 +196,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                   ],
                 ),
               ),
+
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -233,6 +259,20 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
               )
             ],
           ),
+       ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          setState(() {
+            if(_controller.value.isPlaying){
+              _controller.pause();
+            } else{
+              _controller.play();
+            }
+          });
+        },
+        child: Icon(
+          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
         ),
       ),
     );
