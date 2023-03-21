@@ -84,7 +84,7 @@ class _ShopsState extends State<Shops> {
                       nextScreen(context, HomeScreenNew());
                     },
                     child: Text(
-                      "       Cancle       ",
+                      "       Cancel       ",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                     ),
