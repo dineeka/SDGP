@@ -104,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Image(
                   image: AssetImage(Config.bottom_logo),
-                  height: 200,
+                  height: 100,
                   width: 300,
                   fit: BoxFit.cover,
                 ),
@@ -207,6 +207,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       )
                     ],
                   ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    nextScreen(context, HomeScreenNew());
+                  },
+                  child: Text(
+                    "   test login   ",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                  ),
+                  style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 255, 255, 255)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 160, 130, 13)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              side: BorderSide(
+                                  color: Color.fromARGB(255, 160, 130, 13))))),
                 ),
               ],
             )
