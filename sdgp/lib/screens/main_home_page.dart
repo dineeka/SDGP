@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
                     child: SizedBox(
                       width: 300,
                       height: 150,
-                      child: Image.asset('assets/images/repairshop.png'),
+                      child: Image.asset('assets/repairshop.png'),
                     ),
                   ),
                 ),
@@ -90,7 +90,7 @@ class HomePage extends StatelessWidget {
                     child: SizedBox(
                       width: 300,
                       height: 150,
-                      child: Image.asset('assets/images/repairshop.png'),
+                      child: Image.asset('assets/repairshop.png'),
                     ),
                   ),
                 ),
