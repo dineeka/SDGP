@@ -8,6 +8,7 @@ import 'package:sdgp/utils/const.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/next_screen.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Shops extends StatefulWidget {
   const Shops({super.key});
@@ -17,6 +18,15 @@ class Shops extends StatefulWidget {
 }
 
 class _ShopsState extends State<Shops> {
+
+  late GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+
+  void _onMapCreated(GoogleMapController controller){
+    mapController = controller;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +83,16 @@ class _ShopsState extends State<Shops> {
                       ],
                     ),
                   ],
+                ),
+              ),
+              Container(
+                height: 550,
+                child: GoogleMap(
+                    onMapCreated: _onMapCreated,
+                    initialCameraPosition: CameraPosition(
+                      target: _center,
+                      zoom: 11.0,
+                    ),
                 ),
               ),
               Row(
