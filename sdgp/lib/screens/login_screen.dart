@@ -6,6 +6,7 @@ import 'package:sdgp/provider/internet_provider.dart';
 import 'package:sdgp/provider/sign_in_provider.dart';
 import 'package:sdgp/screens/home_screen.dart';
 import 'package:sdgp/screens/home_screen_new.dart';
+import 'package:sdgp/screens/main_home_page.dart';
 import 'package:sdgp/screens/phoneauth_screen.dart';
 import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/const.dart';
@@ -210,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    nextScreen(context, HomeScreenNew());
+                    nextScreen(context, HomePage());
                   },
                   child: Text(
                     "   test login   ",

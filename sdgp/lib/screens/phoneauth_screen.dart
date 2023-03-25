@@ -221,8 +221,8 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
                   // const Spacer(),
                   Image(
                     image: AssetImage(Config.bottom_logo),
-                    height: 100,
-                    width: 250,
+                    height: 50,
+                    width: 100,
                     fit: BoxFit.cover,
                   ),
                 ],
