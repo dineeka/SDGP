@@ -211,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 TextButton(
                   onPressed: () {
-                    nextScreen(context, HomePage());
+                    nextScreen(context, HomeScreenNew());
                   },
                   child: Text(
                     "   test login   ",

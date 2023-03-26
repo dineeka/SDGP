@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/next_screen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sdgp/src/locations.dart' as locations;
 
 class Shops extends StatefulWidget {
   const Shops({super.key});
@@ -18,14 +19,32 @@ class Shops extends StatefulWidget {
 }
 
 class _ShopsState extends State<Shops> {
+  final Map<String, Marker> _markers ={};
+  Future<void> _onMapCreated(GoogleMapController controller) async{
+    final googleOffices = await locations.getGoogleOffices();
+    setState(() {
+      _markers.clear();
+      for (final office in googleOffices.offices) {
+        final marker = Marker(
+          markerId: MarkerId(office.name),
+          position: LatLng(office.lat, office.lng),
+          infoWindow: InfoWindow(
+            title: office.name,
+            snippet: office.address,
+          ),
+        );
+        _markers[office.name] = marker;
+      }
+    });
+  }
 
   late GoogleMapController mapController;
 
   final LatLng _center = const LatLng(45.521563, -122.677433);
 
-  void _onMapCreated(GoogleMapController controller){
+ /* void _onMapCreated(GoogleMapController controller){
     mapController = controller;
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -89,10 +108,15 @@ class _ShopsState extends State<Shops> {
                 height: 550,
                 child: GoogleMap(
                     onMapCreated: _onMapCreated,
-                    initialCameraPosition: CameraPosition(
+                    initialCameraPosition: const CameraPosition(
+                        target: LatLng(0, 0),
+                      zoom: 2,
+                    ),
+                    markers: _markers.values.toSet(),
+                    /*initialCameraPosition: CameraPosition(
                       target: _center,
                       zoom: 11.0,
-                    ),
+                    ),*/
                 ),
               ),
               Row(
