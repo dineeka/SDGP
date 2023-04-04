@@ -8,6 +8,10 @@
         android:label="sdgp"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyDoHvRTcf2tl0KaF762KP18wdh9DEf8MJ8"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
