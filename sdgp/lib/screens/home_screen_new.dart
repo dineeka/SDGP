@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:sdgp/screens/cost_estimation.dart';
 import 'package:sdgp/screens/home_screen.dart';
 import 'package:sdgp/screens/login_screen.dart';
+import 'package:sdgp/screens/upload_image_screen.dart';
 import 'package:sdgp/utils/const.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdgp/utils/config.dart';
@@ -232,7 +233,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                   const Spacer(),
                   TextButton(
                     onPressed: () {
-                      nextScreen(context, CostEstimation());
+                      nextScreen(context, UploadImageScreen());
                     },
                     child: Text(
                       "   Proceed   ",
