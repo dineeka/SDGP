@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:sdgp/screens/camera_screen.dart';
 import 'package:sdgp/screens/cost_estimation.dart';
 import 'package:sdgp/screens/home_screen.dart';
 import 'package:sdgp/screens/login_screen.dart';
@@ -38,7 +39,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _controller.dispose();
     super.dispose();
   }
@@ -103,13 +104,14 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                       ],
                     ),
                     AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
+                      aspectRatio: _controller.value.aspectRatio,
                       child: FutureBuilder(
                         future: _initializeVideoPlayerFuture,
-                        builder: (context, snapshot){
-                          if(snapshot.connectionState == ConnectionState.done){
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
                             return VideoPlayer(_controller);
-                          }else{
+                          } else {
                             return Center(child: CircularProgressIndicator());
                           }
                         },
@@ -197,7 +199,6 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                   ],
                 ),
               ),
-
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -234,6 +235,9 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                   TextButton(
                     onPressed: () {
                       nextScreen(context, UploadImageScreen());
+
+                      nextScreen(context, CameraPage());
+
                     },
                     child: Text(
                       "   Proceed   ",
@@ -260,14 +264,14 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
               )
             ],
           ),
-       ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+        onPressed: () {
           setState(() {
-            if(_controller.value.isPlaying){
+            if (_controller.value.isPlaying) {
               _controller.pause();
-            } else{
+            } else {
               _controller.play();
             }
           });
