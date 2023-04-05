@@ -66,6 +66,7 @@ flutter:
     - assets/VideoTutorial.mp4
     - assets/damagedetectionpic.png
     - assets/repairshop.png
+    - assets/car-service.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see
