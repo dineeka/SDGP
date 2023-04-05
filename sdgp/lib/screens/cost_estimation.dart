@@ -9,14 +9,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/next_screen.dart';
 
-class CostEstimation extends StatefulWidget {
-  const CostEstimation({super.key});
+class CostEstimation extends StatelessWidget {
 
-  @override
-  State<CostEstimation> createState() => _CostEstimationState();
-}
+  final Map<String, String> value;
+  CostEstimation({super.key, required this.value});
+  
 
-class _CostEstimationState extends State<CostEstimation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,6 +67,9 @@ class _CostEstimationState extends State<CostEstimation> {
                         const Text(
                           "Cost Estimation",
                           style: kPageTitleStyle,
+                        ),
+                        Text(
+                           value.toString(),
                         ),
                       ],
                     ),

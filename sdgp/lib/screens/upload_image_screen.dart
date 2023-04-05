@@ -11,9 +11,8 @@ import 'package:sdgp/utils/const.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/next_screen.dart';
-import 'package:tflite/tflite.dart';
+import 'package:sdgp/api/apiForNgrok.dart';
 //import 'package:object_detection/tflite/classifier.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
 
 import 'dart:io';
 import 'dart:typed_data';
@@ -29,69 +28,37 @@ class UploadImageScreen extends StatefulWidget {
 
 class _UploadImageScreenState extends State<UploadImageScreen> {
 
-  // true when inference is ongoing
-  bool _loading = true;
-
-  //image input of the user
-  late File _image;
-
-  //image picker instance
-  final imagePicker = ImagePicker();
-
-  //list containing the predictions of the model
-  List _predictions = [];
-
-  // Instance of [Classifier]
-  //Classifier classifier;
+  File? pickedImage;
+  late dynamic obj;
 
   @override
   void initState(){
     super.initState();
-    loadModel();
   }
 
-  loadModel() async{
-    await Tflite.loadModel(model: 'assets/model_16.tflite', labels: 'assets/labels.txt');
-  }
-
-  detect_image(File image) async{
-    var prediction = await Tflite.runModelOnImage(
-        path: image.path,
-        numResults: 7,
-    threshold: 0.5, imageMean: 127.5, imageStd: 127.5);
-
+  _setPicture(XFile photo) {
     setState(() {
-      _loading = false;
-      _predictions = prediction!;
+      pickedImage = File(photo.path);
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  Future<void> _getImgFromGallery() async{
+    final ImagePicker picker = ImagePicker();
+    final XFile? photo = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1080,
+      maxHeight: 1080,
+    );
+    if(photo != null){
+      _setPicture(photo);
+    }
   }
 
-  _loadimage_gallery() async{
-    var image = await imagePicker.pickImage(source: ImageSource.gallery);
-    if(image == null){
-      return null;
-    }
-    else{
-      _image = File(image.path);
-    }
-    detect_image(_image);
+  _getResult() async {
+    obj = await Api.getPredict(pickedImage!);
+    print(obj);
   }
 
-  _loadimage_camera() async{
-    var image = await imagePicker.pickImage(source: ImageSource.camera);
-    if(image == null){
-      return null;
-    }
-    else{
-      _image = File(image.path);
-    }
-    detect_image(_image);
-  }
 
   @override
   Widget build(BuildContext context){
@@ -156,7 +123,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                 children: [
                   TextButton(
                     onPressed: (){
-                      _loadimage_camera();
+                      _getImgFromGallery();
                     },
                     child: Text(
                       "       Camera       ",
@@ -182,7 +149,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                   //proceed
                   TextButton(
                     onPressed: (){
-                      _loadimage_gallery();
+                      _getImgFromGallery();
                     },
                     child: Text(
                       "   Gallery   ",
@@ -204,26 +171,34 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                   )
                 ],
               ),
-              _loading == false?
+              pickedImage != null?
                   Container(
                       child: Column(
                         children: [
                           Container(
                             height: 300,
                             width: 300,
-                            child: Image.file(_image),
+                            child: Image.file(pickedImage!),
                           ),
-                          Text(_predictions[0].toString())
                         ],
                       ),
                     )
-                  : Container(),
+                  : Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 300,
+                            width: 300,
+                            child: Image.asset(Config.app_logo),
+                          ),
+                        ],
+                      ),
+                  ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   TextButton(
                       onPressed: (){
-                        nextScreen(context, CostEstimation());
                       },
                       child: Text(
                         "       Cancel       ",
@@ -248,8 +223,9 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                 const Spacer(),
                 //proceed
                 TextButton(
-                    onPressed: (){
-                      nextScreen(context, CostEstimation());
+                    onPressed: () {
+                      _getResult();
+                      // nextScreen(context, CostEstimation());
                     },
                     child: Text(
                       "Estimate",
