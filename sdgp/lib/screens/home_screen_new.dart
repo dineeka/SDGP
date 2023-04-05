@@ -236,7 +236,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                     onPressed: () {
                       nextScreen(context, UploadImageScreen());
 
-                      nextScreen(context, CameraPage());
+                     // nextScreen(context, CameraPage());
 
                     },
                     child: Text(
