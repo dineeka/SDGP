@@ -15,6 +15,11 @@ import 'package:tflite/tflite.dart';
 //import 'package:object_detection/tflite/classifier.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
+import 'dart:io';
+import 'dart:typed_data';
+
+
+
 class UploadImageScreen extends StatefulWidget {
   const UploadImageScreen({super.key});
 
