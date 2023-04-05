@@ -166,7 +166,7 @@ class _ShopsState extends State<Shops> {
                       nextScreen(context, HomeScreen());
                     },
                     child: Text(
-                      "Search for shops",
+                      "   Search for shops   ",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                     ),
