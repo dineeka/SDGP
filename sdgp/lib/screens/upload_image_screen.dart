@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sdgp/screens/cost_estimation.dart';
 import 'package:sdgp/screens/home_screen.dart';
 import 'package:sdgp/screens/login_screen.dart';
@@ -9,8 +11,14 @@ import 'package:sdgp/utils/const.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/next_screen.dart';
-import 'package:provider/provider.dart';
-import 'package:sdgp/provider/sign_in_provider.dart';
+import 'package:tflite/tflite.dart';
+//import 'package:object_detection/tflite/classifier.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
+
+import 'dart:io';
+import 'dart:typed_data';
+
+
 
 class UploadImageScreen extends StatefulWidget {
   const UploadImageScreen({super.key});
@@ -20,6 +28,70 @@ class UploadImageScreen extends StatefulWidget {
 }
 
 class _UploadImageScreenState extends State<UploadImageScreen> {
+
+  // true when inference is ongoing
+  bool _loading = true;
+
+  //image input of the user
+  late File _image;
+
+  //image picker instance
+  final imagePicker = ImagePicker();
+
+  //list containing the predictions of the model
+  List _predictions = [];
+
+  // Instance of [Classifier]
+  //Classifier classifier;
+
+  @override
+  void initState(){
+    super.initState();
+    loadModel();
+  }
+
+  loadModel() async{
+    await Tflite.loadModel(model: 'assets/model_16.tflite', labels: 'assets/labels.txt');
+  }
+
+  detect_image(File image) async{
+    var prediction = await Tflite.runModelOnImage(
+        path: image.path,
+        numResults: 7,
+    threshold: 0.5, imageMean: 127.5, imageStd: 127.5);
+
+    setState(() {
+      _loading = false;
+      _predictions = prediction!;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  _loadimage_gallery() async{
+    var image = await imagePicker.pickImage(source: ImageSource.gallery);
+    if(image == null){
+      return null;
+    }
+    else{
+      _image = File(image.path);
+    }
+    detect_image(_image);
+  }
+
+  _loadimage_camera() async{
+    var image = await imagePicker.pickImage(source: ImageSource.camera);
+    if(image == null){
+      return null;
+    }
+    else{
+      _image = File(image.path);
+    }
+    detect_image(_image);
+  }
 
   @override
   Widget build(BuildContext context){
@@ -79,9 +151,73 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                   ],
                 ),
               ),
-              Container(
-                height: 550,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: (){
+                      _loadimage_camera();
+                    },
+                    child: Text(
+                      "       Camera       ",
+                      style:
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                    ),
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 160, 130, 13)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 239, 232, 205)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          side: BorderSide(
+                            color: Color.fromARGB(255, 239, 232, 205),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  //proceed
+                  TextButton(
+                    onPressed: (){
+                      _loadimage_gallery();
+                    },
+                    child: Text(
+                      "   Gallery   ",
+                      style:
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                    ),
+                    style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(
+                            Color.fromARGB(255, 255, 255, 255)),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Color.fromARGB(255, 160, 130, 13)),
+                        shape:
+                        MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                side: BorderSide(
+                                    color: Color.fromARGB(
+                                        255, 160, 130, 13))))),
+                  )
+                ],
               ),
+              _loading == false?
+                  Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 300,
+                            width: 300,
+                            child: Image.file(_image),
+                          ),
+                          Text(_predictions[0].toString())
+                        ],
+                      ),
+                    )
+                  : Container(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
