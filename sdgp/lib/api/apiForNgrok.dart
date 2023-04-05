@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class Api {
   static getPredict(File selectedImage) async {
     final request = http.MultipartRequest(
-        "POST", Uri.parse("https://5cba-112-134-156-32.in.ngrok.io/upload"));
+        "POST", Uri.parse("https://4ce8-112-134-156-32.in.ngrok.io/upload"));
     final headers = {'Content-Type': 'multipart/form-data'};
 
     request.files.add(
