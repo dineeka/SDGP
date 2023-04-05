@@ -11,9 +11,8 @@ import 'package:sdgp/utils/const.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/next_screen.dart';
-import 'package:tflite/tflite.dart';
+import 'package:sdgp/api/apiForNgrok.dart';
 //import 'package:object_detection/tflite/classifier.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
 
 import 'dart:io';
 import 'dart:typed_data';
@@ -26,73 +25,41 @@ class UploadImageScreen extends StatefulWidget {
 }
 
 class _UploadImageScreenState extends State<UploadImageScreen> {
-  // true when inference is ongoing
-  bool _loading = true;
 
-  //image input of the user
-  late File _image;
-
-  //image picker instance
-  final imagePicker = ImagePicker();
-
-  //list containing the predictions of the model
-  List _predictions = [];
-
-  // Instance of [Classifier]
-  //Classifier classifier;
+  File? pickedImage;
+  late dynamic obj;
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
-    loadModel();
   }
 
-  loadModel() async {
-    await Tflite.loadModel(
-        model: 'assets/model_16.tflite', labels: 'assets/labels.txt');
-  }
-
-  detect_image(File image) async {
-    var prediction = await Tflite.runModelOnImage(
-        path: image.path,
-        numResults: 7,
-        threshold: 0.5,
-        imageMean: 127.5,
-        imageStd: 127.5);
-
+  _setPicture(XFile photo) {
     setState(() {
-      _loading = false;
-      _predictions = prediction!;
+      pickedImage = File(photo.path);
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  Future<void> _getImgFromGallery() async{
+    final ImagePicker picker = ImagePicker();
+    final XFile? photo = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1080,
+      maxHeight: 1080,
+    );
+    if(photo != null){
+      _setPicture(photo);
+    }
   }
 
-  _loadimage_gallery() async {
-    var image = await imagePicker.pickImage(source: ImageSource.gallery);
-    if (image == null) {
-      return null;
-    } else {
-      _image = File(image.path);
-    }
-    detect_image(_image);
+  _getResult() async {
+    obj = await Api.getPredict(pickedImage!);
+    print(obj);
   }
 
-  _loadimage_camera() async {
-    var image = await imagePicker.pickImage(source: ImageSource.camera);
-    if (image == null) {
-      return null;
-    } else {
-      _image = File(image.path);
-    }
-    detect_image(_image);
-  }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: Container(
@@ -116,12 +83,12 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
         ),
         child: Padding(
           padding:
-              const EdgeInsets.only(left: 30, right: 30, top: 100, bottom: 70),
+            const EdgeInsets.only(left: 30, right: 30, top: 100, bottom: 70),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Flexible(
-                flex: 2,
+                  flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -129,7 +96,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                       children: [
                         //back button
                         GestureDetector(
-                          onTap: () {
+                          onTap: (){
                             nextScreen(context, HomeScreenNew());
                           },
                           child: const Icon(
@@ -153,13 +120,13 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: () {
-                      _loadimage_camera();
+                    onPressed: (){
+                      _getImgFromGallery();
                     },
                     child: Text(
                       "       Camera       ",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                     ),
                     style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.all<Color>(
@@ -179,13 +146,13 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                   const Spacer(),
                   //proceed
                   TextButton(
-                    onPressed: () {
-                      _loadimage_gallery();
+                    onPressed: (){
+                      _getImgFromGallery();
                     },
                     child: Text(
                       "   Gallery   ",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                     ),
                     style: ButtonStyle(
                         foregroundColor: MaterialStateProperty.all<Color>(
@@ -193,48 +160,52 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                         backgroundColor: MaterialStateProperty.all<Color>(
                             Color.fromARGB(255, 160, 130, 13)),
                         shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    side: BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 160, 130, 13))))),
+                        MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                side: BorderSide(
+                                    color: Color.fromARGB(
+                                        255, 160, 130, 13))))),
                   )
                 ],
               ),
-              _loading == false
-                  ? Container(
+              pickedImage != null?
+                  Container(
                       child: Column(
                         children: [
                           Container(
                             height: 300,
                             width: 300,
-                            child: Image.file(_image),
+                            child: Image.file(pickedImage!),
                           ),
-                          Text(_predictions[0].toString())
                         ],
                       ),
                     )
-                  : Container(),
+                  : Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 300,
+                            width: 300,
+                            child: Image.asset(Config.app_logo),
+                          ),
+                        ],
+                      ),
+                  ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   TextButton(
-                    onPressed: () {
-                      nextScreen(
-                          context,
-                          CostEstimation(
-                            value: {},
-                          ));
-                    },
-                    child: Text(
-                      "       Cancel       ",
-                      style:
+                      onPressed: (){
+                      },
+                      child: Text(
+                        "       Cancel       ",
+                        style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
-                    ),
+                      ),
                     style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 160, 130, 13)),
+                        foregroundColor: MaterialStateProperty.all<Color>(
+                            Color.fromARGB(255, 160, 130, 13)),
                       backgroundColor: MaterialStateProperty.all<Color>(
                           Color.fromARGB(255, 239, 232, 205)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -242,45 +213,42 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                           borderRadius: BorderRadius.circular(15),
                           side: BorderSide(
                             color: Color.fromARGB(255, 239, 232, 205),
-                          ),
-                        ),
-                      ),
                     ),
                   ),
-                  const Spacer(),
-                  //proceed
-                  TextButton(
+                      ),
+                    ),
+              ),
+                const Spacer(),
+                //proceed
+                TextButton(
                     onPressed: () {
-                      nextScreen(
-                          context,
-                          CostEstimation(
-                            value: {},
-                          ));
+                      _getResult();
+                      // nextScreen(context, CostEstimation());
                     },
                     child: Text(
                       "Estimate",
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                     ),
-                    style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromARGB(255, 255, 255, 255)),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromARGB(255, 160, 130, 13)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    side: BorderSide(
-                                        color: Color.fromARGB(
-                                            255, 160, 130, 13))))),
-                  )
-                ],
-              ),
+                  style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 255, 255, 255)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 160, 130, 13)),
+                      shape:
+                      MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              side: BorderSide(
+                                  color: Color.fromARGB(
+                                      255, 160, 130, 13))))),
+                )
             ],
           ),
+          ],
         ),
       ),
+    ),
     );
   }
 }
