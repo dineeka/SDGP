@@ -4,7 +4,7 @@ import numpy as np
 import json
 
 def getData(img):
-    model = YOLO("best.pt")
+    model = YOLO("best.onnx")
     results = model.predict(img, imgsz=640) # source already setup
 
     predictions = []
