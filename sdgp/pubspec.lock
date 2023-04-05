@@ -1221,7 +1221,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.3"
-
   video_player_avfoundation:
     dependency: transitive
     description:
@@ -1242,7 +1241,7 @@ packages:
     dependency: transitive
     description:
       name: video_player_web
-      sha256: "44ce41424d104dfb7cf6982cc6b84af2b007a24d126406025bf40de5d481c74c"
+      sha256: fb3bbeaf0302cb0c31340ebd6075487939aa1fe3b379d1a8784ef852b679940e
       url: "https://pub.dev"
     source: hosted
     version: "2.0.15"

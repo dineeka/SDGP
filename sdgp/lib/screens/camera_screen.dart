@@ -72,18 +72,14 @@ class _CameraPageState extends State<CameraPage> {
                         ),
                       ],
                     ),
+                    Image(
+                      image: AssetImage(Config.raw_image),
+                      height: 100,
+                      width: 300,
+                      //fit: BoxFit.cover,
+                    )
                   ],
                 ),
-              ),
-              Column(
-                children: [
-                  Image(
-                    image: AssetImage(Config.processed_image),
-                    height: 100,
-                    width: 300,
-                    fit: BoxFit.cover,
-                  )
-                ],
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
