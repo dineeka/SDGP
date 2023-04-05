@@ -11,8 +11,8 @@ import 'package:sdgp/utils/next_screen.dart';
 
 class CostEstimation extends StatelessWidget {
 
-  final Map<String, String> value;
-  CostEstimation({super.key, required this.value});
+  final dynamic value;
+  const CostEstimation({super.key, required this.value});
   
 
   @override
@@ -54,7 +54,7 @@ class CostEstimation extends StatelessWidget {
                         //Back button
                         GestureDetector(
                           onTap: () {
-                            nextScreen(context, HomeScreenNew());
+                            nextScreen(context, const HomeScreenNew());
                           },
                           child: const Icon(
                             Icons.arrow_back_ios,
@@ -68,18 +68,23 @@ class CostEstimation extends StatelessWidget {
                           "Cost Estimation",
                           style: kPageTitleStyle,
                         ),
-                        Text(
-                           value.toString(),
-                        ),
                       ],
                     ),
+                    const SizedBox(height: 20),
+                    Text(
+                      value.toString(),
+                      style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    )
                   ],
                 ),
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  //Cancle button
+                  //Cancel button
                   TextButton(
                     onPressed: () {
                       nextScreen(context, HomeScreenNew());

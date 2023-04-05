@@ -54,7 +54,13 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
 
   _getResult() async {
     obj = await Api.getPredict(pickedImage!);
-    print(obj);
+    _nextScreen();
+  }
+
+  _nextScreen() async {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => CostEstimation(value: obj))
+    );
   }
 
 
