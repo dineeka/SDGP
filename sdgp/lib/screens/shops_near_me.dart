@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -8,6 +10,11 @@ import 'package:sdgp/utils/const.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/next_screen.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sdgp/src/locations.dart' as locations;
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_webservice/places.dart';
+
 
 class Shops extends StatefulWidget {
   const Shops({super.key});
@@ -17,6 +24,36 @@ class Shops extends StatefulWidget {
 }
 
 class _ShopsState extends State<Shops> {
+  late GoogleMapController _mapController;
+  List<Marker> _markers =[];
+
+  //final Map<String, Marker> _markers ={};
+  /*Future<void> _onMapCreated(GoogleMapController controller) async{
+    final googleOffices = await locations.getGoogleOffices();
+    setState(() {
+      _markers.clear();
+      for (final office in googleOffices.offices) {
+        final marker = Marker(
+          markerId: MarkerId(office.name),
+          position: LatLng(office.lat, office.lng),
+          infoWindow: InfoWindow(
+            title: office.name,
+            snippet: office.address,
+          ),
+        );
+        _markers[office.name] = marker;
+      }
+    });
+  }*/
+
+  late GoogleMapController mapController;
+
+  final LatLng _center = const LatLng(45.521563, -122.677433);
+
+ /* void _onMapCreated(GoogleMapController controller){
+    mapController = controller;
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +112,25 @@ class _ShopsState extends State<Shops> {
                   ],
                 ),
               ),
+              Container(
+                height: 550,
+                child: GoogleMap(
+                  onMapCreated: (controller) => _mapController = controller,
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(6.895521, 79.855751),
+                      zoom:12.0,
+                    ),
+                    markers: Set<Marker>.of(_markers),
+
+                    /*onMapCreated: _onMapCreated,
+                    initialCameraPosition: const CameraPosition(
+                        target: LatLng(0, 0),
+                      zoom: 2,
+                    ),
+                    markers: _markers.values.toSet(),*/
+                ),
+
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -110,7 +166,7 @@ class _ShopsState extends State<Shops> {
                       nextScreen(context, HomeScreen());
                     },
                     child: Text(
-                      "Search for shops",
+                      "   Search for shops   ",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                     ),
@@ -133,6 +189,36 @@ class _ShopsState extends State<Shops> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _searchRepairShops,
+        child: Icon(Icons.search),
+      ),
     );
+  }
+
+  Future<void> _searchRepairShops() async {
+
+    final apiKey = Platform.isAndroid ? 'AIzaSyDoHvRTcf2tl0KaF762KP18wdh9DEf8MJ8': 'AIzaSyBbi5GtCDnEFgHbOFvytMgTv6YC4qDeTig';
+    GoogleMapsPlaces places = GoogleMapsPlaces(apiKey: apiKey);
+
+    PlacesSearchResponse response = await places.searchNearbyWithRadius(
+        Location(lat: 6.895521, lng: 79.855751),
+        5000,
+        type: "car_repair",
+    );
+
+    setState(() {
+      _markers = response.results
+          .map((result) => Marker(
+        markerId: MarkerId(result.placeId),
+        position: LatLng(
+          result.geometry!.location.lat,
+          result.geometry!.location.lng,
+        ),
+        infoWindow: InfoWindow(title: result.name),
+      ))
+          .toList();
+    });
+
   }
 }

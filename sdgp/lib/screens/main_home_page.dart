@@ -1,8 +1,15 @@
+// ignore_for_file: must_be_immutable
+
 import "package:flutter/material.dart";
 
-class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageNewState();
+}
+
+class _HomePageNewState extends State<HomePage> {
   Widget appBarTitle = new Text("Main Page");
 
   @override
