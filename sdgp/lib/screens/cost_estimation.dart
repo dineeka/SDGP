@@ -9,14 +9,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/next_screen.dart';
 
-class CostEstimation extends StatefulWidget {
-  const CostEstimation({super.key});
+class CostEstimation extends StatelessWidget {
 
-  @override
-  State<CostEstimation> createState() => _CostEstimationState();
-}
+  final dynamic value;
+  const CostEstimation({super.key, required this.value});
+  
 
-class _CostEstimationState extends State<CostEstimation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +54,7 @@ class _CostEstimationState extends State<CostEstimation> {
                         //Back button
                         GestureDetector(
                           onTap: () {
-                            nextScreen(context, HomeScreenNew());
+                            nextScreen(context, const HomeScreenNew());
                           },
                           child: const Icon(
                             Icons.arrow_back_ios,
@@ -72,13 +70,21 @@ class _CostEstimationState extends State<CostEstimation> {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 20),
+                    Text(
+                      value.toString(),
+                      style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    )
                   ],
                 ),
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  //Cancle button
+                  //Cancel button
                   TextButton(
                     onPressed: () {
                       nextScreen(context, HomeScreenNew());

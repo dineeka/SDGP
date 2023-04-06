@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sdgp/screens/cost_estimation.dart';
 import 'package:sdgp/screens/home_screen.dart';
 import 'package:sdgp/screens/login_screen.dart';
@@ -9,8 +11,11 @@ import 'package:sdgp/utils/const.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/next_screen.dart';
-import 'package:provider/provider.dart';
-import 'package:sdgp/provider/sign_in_provider.dart';
+import 'package:sdgp/api/apiForNgrok.dart';
+//import 'package:object_detection/tflite/classifier.dart';
+
+import 'dart:io';
+import 'dart:typed_data';
 
 class UploadImageScreen extends StatefulWidget {
   const UploadImageScreen({super.key});
@@ -20,6 +25,44 @@ class UploadImageScreen extends StatefulWidget {
 }
 
 class _UploadImageScreenState extends State<UploadImageScreen> {
+
+  File? pickedImage;
+  late dynamic obj;
+
+  @override
+  void initState(){
+    super.initState();
+  }
+
+  _setPicture(XFile photo) {
+    setState(() {
+      pickedImage = File(photo.path);
+    });
+  }
+
+  Future<void> _getImgFromGallery() async{
+    final ImagePicker picker = ImagePicker();
+    final XFile? photo = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1080,
+      maxHeight: 1080,
+    );
+    if(photo != null){
+      _setPicture(photo);
+    }
+  }
+
+  _getResult() async {
+    obj = await Api.getPredict(pickedImage!);
+    _nextScreen();
+  }
+
+  _nextScreen() async {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => CostEstimation(value: obj))
+    );
+  }
+
 
   @override
   Widget build(BuildContext context){
@@ -79,15 +122,87 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                   ],
                 ),
               ),
-              Container(
-                height: 550,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: (){
+                      _getImgFromGallery();
+                    },
+                    child: Text(
+                      "       Camera       ",
+                      style:
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                    ),
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 160, 130, 13)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Color.fromARGB(255, 239, 232, 205)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          side: BorderSide(
+                            color: Color.fromARGB(255, 239, 232, 205),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  //proceed
+                  TextButton(
+                    onPressed: (){
+                      _getImgFromGallery();
+                    },
+                    child: Text(
+                      "   Gallery   ",
+                      style:
+                      TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                    ),
+                    style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(
+                            Color.fromARGB(255, 255, 255, 255)),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Color.fromARGB(255, 160, 130, 13)),
+                        shape:
+                        MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                side: BorderSide(
+                                    color: Color.fromARGB(
+                                        255, 160, 130, 13))))),
+                  )
+                ],
               ),
+              pickedImage != null?
+                  Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 300,
+                            width: 300,
+                            child: Image.file(pickedImage!),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 300,
+                            width: 300,
+                            child: Image.asset(Config.app_logo),
+                          ),
+                        ],
+                      ),
+                  ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   TextButton(
                       onPressed: (){
-                        nextScreen(context, CostEstimation());
                       },
                       child: Text(
                         "       Cancel       ",
@@ -112,8 +227,9 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                 const Spacer(),
                 //proceed
                 TextButton(
-                    onPressed: (){
-                      nextScreen(context, CostEstimation());
+                    onPressed: () {
+                      _getResult();
+                      // nextScreen(context, CostEstimation());
                     },
                     child: Text(
                       "Estimate",
