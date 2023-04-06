@@ -13,7 +13,6 @@ class CostEstimation extends StatelessWidget {
 
   final dynamic value;
   const CostEstimation({super.key, required this.value});
-  
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +71,7 @@ class CostEstimation extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      value.toString(),
+                      value.toString() + _cost(),
                       style: const TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w300,
@@ -141,4 +140,46 @@ class CostEstimation extends StatelessWidget {
       ),
     );
   }
+  String getSubstringBetweenChars(String str, String startChar, String endChar) {
+    int startIndex = str.indexOf(startChar);
+    int endIndex = str.indexOf(endChar, startIndex + 1);
+    if (startIndex != -1 && endIndex != -1) {
+      return str.substring(startIndex + 1, endIndex);
+    } else {
+      return " "; // or an empty string, or throw an exception, depending on your use case
+    }
+  }
+  _cost (){
+    String price = value.toString();
+    String input = getSubstringBetweenChars (price,"{",":");
+      String output;
+      switch (input) {
+        case 'crack_and_hole':
+          output = '2000 - 3000';
+          break;
+        case 'medium_deformation':
+          output = '5000 - 7000';
+          break;
+        case 'severe_deformation':
+          output = '3000 - 4000';
+          break;
+        case 'severe_scratch':
+          output = '7000 - 8000';
+          break;
+        case 'slight_deformation':
+          output = '4000 - 6000';
+          break;
+        case 'slight_scratch':
+          output = '2000 - 3000';
+          break;
+        case 'windshield_damage':
+          output = '8000 - 9000';
+          break;
+        default:
+          output = 'Invalid input';
+      }
+      return output;
+    }
+
+
 }
