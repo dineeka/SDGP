@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: const MaterialApp(
-        home: UploadImageScreen(),
+        home: SplashScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );

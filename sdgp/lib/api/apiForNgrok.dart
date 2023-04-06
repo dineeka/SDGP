@@ -5,7 +5,9 @@ import 'package:http/http.dart' as http;
 class Api {
   static getPredict(File selectedImage) async {
     final request = http.MultipartRequest(
-        "POST", Uri.parse("https://525a-2402-4000-b280-a341-61fd-1fc9-aaad-5205.in.ngrok.io/upload"));
+        "POST",
+        Uri.parse(
+            "https://d5eb-2402-4000-b280-a341-5870-874-4629-2c3a.in.ngrok.io/upload"));
     final headers = {'Content-Type': 'multipart/form-data'};
 
     request.files.add(
@@ -13,9 +15,7 @@ class Api {
         'imageDetect',
         selectedImage.readAsBytes().asStream(),
         selectedImage.lengthSync(),
-        filename: selectedImage.path
-            .split("/")
-            .last,
+        filename: selectedImage.path.split("/").last,
       ),
     );
 

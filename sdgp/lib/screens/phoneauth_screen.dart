@@ -15,6 +15,7 @@ import 'package:sdgp/provider/sign_in_provider.dart';
 import 'package:sdgp/utils/snack_bar.dart';
 
 import 'home_screen_new.dart';
+import 'main_home_page.dart';
 
 class PhoneAuthScreen extends StatefulWidget {
   const PhoneAuthScreen({super.key});

@@ -10,7 +10,6 @@ import 'package:sdgp/utils/config.dart';
 import 'package:sdgp/utils/next_screen.dart';
 
 class CostEstimation extends StatelessWidget {
-
   final dynamic value;
   const CostEstimation({super.key, required this.value});
 
@@ -69,13 +68,55 @@ class CostEstimation extends StatelessWidget {
                         ),
                       ],
                     ),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //       color: Colors.white,
+                    //       borderRadius: BorderRadius.circular(10)),
+                    //   height: 400,
+                    //   width: 400,
+                    // ),
+                    SizedBox(
+                      height: 25,
+                    ),
                     const SizedBox(height: 20),
                     Text(
-                      value.toString() + _cost(),
-                      style: const TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w300,
-                      ),
+                      "Severity : " + _costInput(),
+                      style: kTesxtStyle,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Estimation Range : " + _cost(),
+                      style: kTesxtStyle,
+                    ),
+                    const Spacer(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        Image(
+                          image: AssetImage(Config.bottom_logo),
+                          height: 180,
+                          width: 300,
+                          fit: BoxFit.cover,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image(
+                          image: AssetImage(Config.name_logo),
+                          height: 120,
+                          width: 300,
+                          fit: BoxFit.cover,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 30,
                     )
                   ],
                 ),
@@ -140,7 +181,9 @@ class CostEstimation extends StatelessWidget {
       ),
     );
   }
-  String getSubstringBetweenChars(String str, String startChar, String endChar) {
+
+  String getSubstringBetweenChars(
+      String str, String startChar, String endChar) {
     int startIndex = str.indexOf(startChar);
     int endIndex = str.indexOf(endChar, startIndex + 1);
     if (startIndex != -1 && endIndex != -1) {
@@ -149,37 +192,82 @@ class CostEstimation extends StatelessWidget {
       return " "; // or an empty string, or throw an exception, depending on your use case
     }
   }
-  _cost (){
+
+  _cost() {
     String price = value.toString();
-    String input = getSubstringBetweenChars (price,"{",":");
-      String output;
-      switch (input) {
-        case 'crack_and_hole':
-          output = '2000 - 3000';
-          break;
-        case 'medium_deformation':
-          output = '5000 - 7000';
-          break;
-        case 'severe_deformation':
-          output = '3000 - 4000';
-          break;
-        case 'severe_scratch':
-          output = '7000 - 8000';
-          break;
-        case 'slight_deformation':
-          output = '4000 - 6000';
-          break;
-        case 'slight_scratch':
-          output = '2000 - 3000';
-          break;
-        case 'windshield_damage':
-          output = '8000 - 9000';
-          break;
-        default:
-          output = 'Invalid input';
-      }
-      return output;
+    String input = getSubstringBetweenChars(price, "{", ":");
+    String output;
+    String damageInText;
+    switch (input) {
+      case 'crack_and_hole':
+        damageInText = "crack and hole";
+        output = '2000 - 3000';
+        break;
+      case 'medium_deformation':
+        damageInText = "medium_deformation";
+        output = '5000 - 7000';
+        break;
+      case 'severe_deformation':
+        output = '3000 - 4000';
+        break;
+      case 'severe_scratch':
+        output = '7000 - 8000';
+        break;
+      case 'slight_deformation':
+        output = '4000 - 6000';
+        break;
+      case 'slight_scratch':
+        output = '2000 - 3000';
+        break;
+      case 'windshield_damage':
+        output = '8000 - 9000';
+        break;
+      default:
+        output = 'Invalid input';
     }
+    return output;
+  }
 
-
+  _costInput() {
+    String price = value.toString();
+    String input = getSubstringBetweenChars(price, "{", ":");
+    String output;
+    String damageInText;
+    switch (input) {
+      case 'crack_and_hole':
+        damageInText = "crack and hole";
+        output = '2000 - 3000';
+        damageInText = "crack and hole";
+        break;
+      case 'medium_deformation':
+        damageInText = "medium_deformation";
+        output = '5000 - 7000';
+        damageInText = "medium deformation";
+        break;
+      case 'severe_deformation':
+        output = '3000 - 4000';
+        damageInText = "severe deformation";
+        break;
+      case 'severe_scratch':
+        output = '7000 - 8000';
+        damageInText = "severe scratch";
+        break;
+      case 'slight_deformation':
+        output = '4000 - 6000';
+        damageInText = "slight deformation";
+        break;
+      case 'slight_scratch':
+        output = '2000 - 3000';
+        damageInText = "slight scratch";
+        break;
+      case 'windshield_damage':
+        output = '8000 - 9000';
+        damageInText = "windshield damage";
+        break;
+      default:
+        output = 'Invalid input';
+        damageInText = "";
+    }
+    return damageInText;
+  }
 }

@@ -1,6 +1,22 @@
 // ignore_for_file: must_be_immutable
 
 import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:sdgp/screens/camera_screen.dart';
+import 'package:sdgp/screens/cost_estimation.dart';
+import 'package:sdgp/screens/home_screen.dart';
+import 'package:sdgp/screens/login_screen.dart';
+import 'package:sdgp/screens/upload_image_screen.dart';
+import 'package:sdgp/utils/const.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sdgp/utils/config.dart';
+import 'package:sdgp/utils/next_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:sdgp/provider/sign_in_provider.dart';
+import 'package:video_player/video_player.dart';
+import 'package:sdgp/utils/next_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -50,8 +66,7 @@ class _HomePageNewState extends State<HomePage> {
                     child: SizedBox(
                       width: 300,
                       height: 150,
-                      child:
-                          Image.asset('assets/images/damagedetectionpic.png'),
+                      child: Image.asset('assets/damagedetectionpic.png'),
                     ),
                   ),
                 ),

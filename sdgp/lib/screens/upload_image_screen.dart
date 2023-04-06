@@ -25,12 +25,11 @@ class UploadImageScreen extends StatefulWidget {
 }
 
 class _UploadImageScreenState extends State<UploadImageScreen> {
-
   File? pickedImage;
   late dynamic obj;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
   }
 
@@ -40,14 +39,14 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
     });
   }
 
-  Future<void> _getImgFromGallery() async{
+  Future<void> _getImgFromGallery() async {
     final ImagePicker picker = ImagePicker();
     final XFile? photo = await picker.pickImage(
       source: ImageSource.gallery,
       maxWidth: 1080,
       maxHeight: 1080,
     );
-    if(photo != null){
+    if (photo != null) {
       _setPicture(photo);
     }
   }
@@ -59,13 +58,11 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
 
   _nextScreen() async {
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => CostEstimation(value: obj))
-    );
+        MaterialPageRoute(builder: (context) => CostEstimation(value: obj)));
   }
 
-
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: Container(
@@ -89,12 +86,12 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
         ),
         child: Padding(
           padding:
-            const EdgeInsets.only(left: 30, right: 30, top: 100, bottom: 70),
+              const EdgeInsets.only(left: 30, right: 30, top: 100, bottom: 70),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Flexible(
-                  flex: 2,
+                flex: 2,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -102,7 +99,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                       children: [
                         //back button
                         GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             nextScreen(context, HomeScreenNew());
                           },
                           child: const Icon(
@@ -119,20 +116,153 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Row(
+                      children: [
+                        Spacer(),
+                        GestureDetector(
+                          onTap: () {
+                            _getImgFromGallery();
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: kIconColor,
+                                borderRadius: BorderRadius.circular(10)),
+                            padding: const EdgeInsets.all(8.0),
+                            height: 120,
+                            width: 120,
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.image,
+                                  size: 80,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  "Gallery",
+                                  style: TextStyle(color: Colors.white),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                        GestureDetector(
+                          onTap: () {
+                            _getImgFromGallery();
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: kIconColor,
+                                borderRadius: BorderRadius.circular(10)),
+                            padding: const EdgeInsets.all(8.0),
+                            height: 120,
+                            width: 120,
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.camera_enhance,
+                                  size: 80,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  "Camera",
+                                  style: TextStyle(color: Colors.white),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Spacer()
+                      ],
+                    ),
+                    Spacer(),
+                    Row(
+                      children: [
+                        Spacer(),
+                        pickedImage != null
+                            ? Container(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 300,
+                                      width: 300,
+                                      child: Image.file(pickedImage!),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : Container(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 300,
+                                      width: 300,
+                                      child: Image(
+                                        image:
+                                            AssetImage(Config.upload_page_car),
+                                        height: 300,
+                                        width: 300,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                        Spacer()
+                      ],
+                    ),
+                    Spacer(),
+                    Row(
+                      children: [
+                        Spacer(),
+                        GestureDetector(
+                          onTap: () {
+                            _getResult();
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: kIconColor,
+                                borderRadius: BorderRadius.circular(10)),
+                            padding: const EdgeInsets.all(8.0),
+                            height: 120,
+                            width: 120,
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.change_circle_outlined,
+                                  size: 80,
+                                  color: Colors.white,
+                                ),
+                                Text(
+                                  "Estimate",
+                                  style: TextStyle(color: Colors.white),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                    Spacer()
                   ],
                 ),
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  Spacer(),
                   TextButton(
-                    onPressed: (){
-                      _getImgFromGallery();
+                    onPressed: () {
+                      nextScreen(context, HomeScreenNew());
                     },
                     child: Text(
-                      "       Camera       ",
+                      "       Cancel       ",
                       style:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                     ),
                     style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.all<Color>(
@@ -151,110 +281,12 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                   ),
                   const Spacer(),
                   //proceed
-                  TextButton(
-                    onPressed: (){
-                      _getImgFromGallery();
-                    },
-                    child: Text(
-                      "   Gallery   ",
-                      style:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
-                    ),
-                    style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromARGB(255, 255, 255, 255)),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromARGB(255, 160, 130, 13)),
-                        shape:
-                        MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                side: BorderSide(
-                                    color: Color.fromARGB(
-                                        255, 160, 130, 13))))),
-                  )
                 ],
               ),
-              pickedImage != null?
-                  Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 300,
-                            width: 300,
-                            child: Image.file(pickedImage!),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 300,
-                            width: 300,
-                            child: Image.asset(Config.app_logo),
-                          ),
-                        ],
-                      ),
-                  ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  TextButton(
-                      onPressed: (){
-                      },
-                      child: Text(
-                        "       Cancel       ",
-                        style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
-                      ),
-                    style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                            Color.fromARGB(255, 160, 130, 13)),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 239, 232, 205)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          side: BorderSide(
-                            color: Color.fromARGB(255, 239, 232, 205),
-                    ),
-                  ),
-                      ),
-                    ),
-              ),
-                const Spacer(),
-                //proceed
-                TextButton(
-                    onPressed: () {
-                      _getResult();
-                      // nextScreen(context, CostEstimation());
-                    },
-                    child: Text(
-                      "Estimate",
-                      style:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
-                    ),
-                  style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 255, 255, 255)),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromARGB(255, 160, 130, 13)),
-                      shape:
-                      MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              side: BorderSide(
-                                  color: Color.fromARGB(
-                                      255, 160, 130, 13))))),
-                )
             ],
           ),
-          ],
         ),
       ),
-    ),
     );
   }
 }

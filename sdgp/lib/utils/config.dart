@@ -5,4 +5,5 @@ class Config {
   static const bottom_logo = "assets/car2.png";
   static const raw_image = "assets/rawImage.jpg";
   static final processed_image = "assets/processedImage.png";
+  static final upload_page_car = "assets/car1.png";
 }

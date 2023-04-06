@@ -103,6 +103,9 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 50,
+                    ),
                     AspectRatio(
                       aspectRatio: _controller.value.aspectRatio,
                       child: FutureBuilder(
@@ -117,83 +120,103 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                         },
                       ),
                     ),
-                    /*Image(
-                      image: AssetImage("assets/car1.png"),
-                      height: 350,
-                      width: 400,
-                      fit: BoxFit.cover,
-                    ),*/
-                    Row(
-                      children: const [
-                        Icon(
-                          Icons.circle_outlined,
-                          color: kIconColor,
-                          size: 15,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "Adjust focus and exposure for the perfect photos",
-                          style: TextStyle(color: kIconColor),
-                        )
-                      ],
+                    SizedBox(
+                      height: 50,
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: const [
-                        Icon(
-                          Icons.circle_outlined,
-                          color: kIconColor,
-                          size: 15,
+                    Column(
+                      children: [
+                        Row(
+                          children: const [
+                            Icon(
+                              Icons.circle_outlined,
+                              color: kIconColor,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Adjust focus and exposure for the perfect photos",
+                              style: TextStyle(color: kIconColor),
+                            )
+                          ],
                         ),
-                        SizedBox(
-                          width: 10,
+                        const SizedBox(
+                          height: 20,
                         ),
-                        Text(
-                          "Use gridlines to balance your shot.",
-                          style: TextStyle(color: kIconColor),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: const [
-                        Icon(
-                          Icons.circle_outlined,
-                          color: kIconColor,
-                          size: 15,
+                        Row(
+                          children: const [
+                            Icon(
+                              Icons.circle_outlined,
+                              color: kIconColor,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Use gridlines to balance your shot.",
+                              style: TextStyle(color: kIconColor),
+                            )
+                          ],
                         ),
-                        SizedBox(
-                          width: 10,
+                        const SizedBox(
+                          height: 20,
                         ),
-                        Text(
-                          "Take photos with steady hands or make use of tripods.",
-                          style: TextStyle(color: kIconColor),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: const [
-                        Icon(
-                          Icons.circle_outlined,
-                          color: kIconColor,
-                          size: 15,
+                        Row(
+                          children: const [
+                            Icon(
+                              Icons.circle_outlined,
+                              color: kIconColor,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Take photos with steady hands.",
+                              style: TextStyle(color: kIconColor),
+                            )
+                          ],
                         ),
-                        SizedBox(
-                          width: 10,
+                        const SizedBox(
+                          height: 20,
                         ),
-                        Text(
-                          "Take photos of the car symmetrically.",
-                          style: TextStyle(color: kIconColor),
-                        )
+                        Row(
+                          children: const [
+                            Icon(
+                              Icons.circle_outlined,
+                              color: kIconColor,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Make use of tripods.",
+                              style: TextStyle(color: kIconColor),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          children: const [
+                            Icon(
+                              Icons.circle_outlined,
+                              color: kIconColor,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Take photos of the car symmetrically.",
+                              style: TextStyle(color: kIconColor),
+                            )
+                          ],
+                        ),
                       ],
                     ),
                   ],
