@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'cost_estimation.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:sdgp/screens/cost_estimation.dart';
@@ -92,7 +93,7 @@ class _ShopsState extends State<Shops> {
                         //Back button
                         GestureDetector(
                           onTap: () {
-                            // nextScreen(context, CostEstimation());
+                            nextScreen(context, HomeScreenNew());
                           },
                           child: const Icon(
                             Icons.arrow_back_ios,
@@ -139,7 +140,7 @@ class _ShopsState extends State<Shops> {
                       nextScreen(context, HomeScreenNew());
                     },
                     child: Text(
-                      "       Cancel       ",
+                      "  Cancel  ",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                     ),

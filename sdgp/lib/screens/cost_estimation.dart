@@ -131,7 +131,7 @@ class CostEstimation extends StatelessWidget {
                       nextScreen(context, UploadImageScreen());
                     },
                     child: Text(
-                      "       Cancle       ",
+                      "     Cancle     ",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
                     ),
@@ -215,7 +215,7 @@ class CostEstimation extends StatelessWidget {
         output = '7000 - 8000';
         break;
       case 'slight_deformation':
-        output = '4000 - 6000';
+        output = 'Rs: 10000 - 20000';
         break;
       case 'slight_scratch':
         output = '2000 - 3000';
@@ -238,36 +238,36 @@ class CostEstimation extends StatelessWidget {
       case 'crack_and_hole':
         damageInText = "crack and hole";
         output = '2000 - 3000';
-        damageInText = "crack and hole";
+        damageInText = "Crack and Hole";
         break;
       case 'medium_deformation':
         damageInText = "medium_deformation";
         output = '5000 - 7000';
-        damageInText = "medium deformation";
+        damageInText = "Medium Deformation";
         break;
       case 'severe_deformation':
         output = '3000 - 4000';
-        damageInText = "severe deformation";
+        damageInText = "Severe Deformation";
         break;
       case 'severe_scratch':
         output = '7000 - 8000';
-        damageInText = "severe scratch";
+        damageInText = "Severe Scratch";
         break;
       case 'slight_deformation':
         output = '4000 - 6000';
-        damageInText = "slight deformation";
+        damageInText = "Slight Deformation";
         break;
       case 'slight_scratch':
         output = '2000 - 3000';
-        damageInText = "slight scratch";
+        damageInText = "Slight Scratch";
         break;
       case 'windshield_damage':
         output = '8000 - 9000';
-        damageInText = "windshield damage";
+        damageInText = "Windshield Damage";
         break;
       default:
         output = 'Invalid input';
-        damageInText = "";
+        damageInText = "No Damage";
     }
     return damageInText;
   }

@@ -7,7 +7,7 @@ class Api {
     final request = http.MultipartRequest(
         "POST",
         Uri.parse(
-            "https://d5eb-2402-4000-b280-a341-5870-874-4629-2c3a.in.ngrok.io/upload"));
+            "https://ea3a-2402-4000-b280-a341-2d60-a5d3-156f-fd29.in.ngrok.io/upload"));
     final headers = {'Content-Type': 'multipart/form-data'};
 
     request.files.add(

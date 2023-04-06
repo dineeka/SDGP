@@ -175,7 +175,7 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                               width: 10,
                             ),
                             Text(
-                              "Adjust focus and exposure for the perfect photos",
+                              "Adjust focus and exposure",
                               style: TextStyle(
                                   color: kIconColor,
                                   fontWeight: FontWeight.w600),
