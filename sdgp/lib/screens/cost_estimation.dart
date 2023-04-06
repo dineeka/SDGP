@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:sdgp/screens/home_screen.dart';
 import 'package:sdgp/screens/home_screen_new.dart';
 import 'package:sdgp/screens/shops_near_me.dart';
+import 'package:sdgp/screens/upload_image_screen.dart';
 import 'package:sdgp/utils/const.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sdgp/utils/config.dart';
@@ -127,7 +128,7 @@ class CostEstimation extends StatelessWidget {
                   //Cancel button
                   TextButton(
                     onPressed: () {
-                      nextScreen(context, HomeScreenNew());
+                      nextScreen(context, UploadImageScreen());
                     },
                     child: Text(
                       "       Cancle       ",

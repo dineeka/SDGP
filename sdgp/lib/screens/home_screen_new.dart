@@ -121,7 +121,46 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                       ),
                     ),
                     SizedBox(
-                      height: 50,
+                      height: 30,
+                    ),
+                    Row(
+                      children: [
+                        Spacer(),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              if (_controller.value.isPlaying) {
+                                _controller.pause();
+                              } else {
+                                _controller.play();
+                              }
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.brown,
+                                borderRadius: BorderRadius.circular(50)),
+                            padding: const EdgeInsets.all(8.0),
+                            height: 55,
+                            width: 55,
+                            child: Column(
+                              children: [
+                                Icon(
+                                  _controller.value.isPlaying
+                                      ? Icons.pause
+                                      : Icons.play_arrow,
+                                  size: 35,
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
                     ),
                     Column(
                       children: [
@@ -137,7 +176,9 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                             ),
                             Text(
                               "Adjust focus and exposure for the perfect photos",
-                              style: TextStyle(color: kIconColor),
+                              style: TextStyle(
+                                  color: kIconColor,
+                                  fontWeight: FontWeight.w600),
                             )
                           ],
                         ),
@@ -156,7 +197,9 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                             ),
                             Text(
                               "Use gridlines to balance your shot.",
-                              style: TextStyle(color: kIconColor),
+                              style: TextStyle(
+                                  color: kIconColor,
+                                  fontWeight: FontWeight.w600),
                             )
                           ],
                         ),
@@ -175,7 +218,9 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                             ),
                             Text(
                               "Take photos with steady hands.",
-                              style: TextStyle(color: kIconColor),
+                              style: TextStyle(
+                                  color: kIconColor,
+                                  fontWeight: FontWeight.w600),
                             )
                           ],
                         ),
@@ -194,7 +239,9 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                             ),
                             Text(
                               "Make use of tripods.",
-                              style: TextStyle(color: kIconColor),
+                              style: TextStyle(
+                                  color: kIconColor,
+                                  fontWeight: FontWeight.w600),
                             )
                           ],
                         ),
@@ -213,7 +260,9 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
                             ),
                             Text(
                               "Take photos of the car symmetrically.",
-                              style: TextStyle(color: kIconColor),
+                              style: TextStyle(
+                                  color: kIconColor,
+                                  fontWeight: FontWeight.w600),
                             )
                           ],
                         ),
@@ -288,20 +337,20 @@ class _HomeScreenNewState extends State<HomeScreenNew> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            if (_controller.value.isPlaying) {
-              _controller.pause();
-            } else {
-              _controller.play();
-            }
-          });
-        },
-        child: Icon(
-          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     setState(() {
+      //       if (_controller.value.isPlaying) {
+      //         _controller.pause();
+      //       } else {
+      //         _controller.play();
+      //       }
+      //     });
+      //   },
+      //   child: Icon(
+      //     _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+      //   ),
+      // ),
     );
   }
 }

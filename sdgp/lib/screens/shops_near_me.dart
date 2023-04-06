@@ -15,7 +15,6 @@ import 'package:sdgp/src/locations.dart' as locations;
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_webservice/places.dart';
 
-
 class Shops extends StatefulWidget {
   const Shops({super.key});
 
@@ -25,7 +24,7 @@ class Shops extends StatefulWidget {
 
 class _ShopsState extends State<Shops> {
   late GoogleMapController _mapController;
-  List<Marker> _markers =[];
+  List<Marker> _markers = [];
 
   //final Map<String, Marker> _markers ={};
   /*Future<void> _onMapCreated(GoogleMapController controller) async{
@@ -50,7 +49,7 @@ class _ShopsState extends State<Shops> {
 
   final LatLng _center = const LatLng(45.521563, -122.677433);
 
- /* void _onMapCreated(GoogleMapController controller){
+  /* void _onMapCreated(GoogleMapController controller){
     mapController = controller;
   }*/
 
@@ -116,21 +115,21 @@ class _ShopsState extends State<Shops> {
                 height: 550,
                 child: GoogleMap(
                   onMapCreated: (controller) => _mapController = controller,
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(6.895521, 79.855751),
-                      zoom:12.0,
-                    ),
-                    markers: Set<Marker>.of(_markers),
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(6.895521, 79.855751),
+                    zoom: 12.0,
+                  ),
+                  markers: Set<Marker>.of(_markers),
 
-                    /*onMapCreated: _onMapCreated,
+                  /*onMapCreated: _onMapCreated,
                     initialCameraPosition: const CameraPosition(
                         target: LatLng(0, 0),
                       zoom: 2,
                     ),
                     markers: _markers.values.toSet(),*/
                 ),
-
               ),
+              Spacer(),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -189,36 +188,36 @@ class _ShopsState extends State<Shops> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _searchRepairShops,
-        child: Icon(Icons.search),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _searchRepairShops,
+      //   child: Icon(Icons.search),
+      // ),
     );
   }
 
   Future<void> _searchRepairShops() async {
-
-    final apiKey = Platform.isAndroid ? 'AIzaSyDoHvRTcf2tl0KaF762KP18wdh9DEf8MJ8': 'AIzaSyBbi5GtCDnEFgHbOFvytMgTv6YC4qDeTig';
+    final apiKey = Platform.isAndroid
+        ? 'AIzaSyDoHvRTcf2tl0KaF762KP18wdh9DEf8MJ8'
+        : 'AIzaSyBbi5GtCDnEFgHbOFvytMgTv6YC4qDeTig';
     GoogleMapsPlaces places = GoogleMapsPlaces(apiKey: apiKey);
 
     PlacesSearchResponse response = await places.searchNearbyWithRadius(
-        Location(lat: 6.895521, lng: 79.855751),
-        5000,
-        type: "car_repair",
+      Location(lat: 6.895521, lng: 79.855751),
+      5000,
+      type: "car_repair",
     );
 
     setState(() {
       _markers = response.results
           .map((result) => Marker(
-        markerId: MarkerId(result.placeId),
-        position: LatLng(
-          result.geometry!.location.lat,
-          result.geometry!.location.lng,
-        ),
-        infoWindow: InfoWindow(title: result.name),
-      ))
+                markerId: MarkerId(result.placeId),
+                position: LatLng(
+                  result.geometry!.location.lat,
+                  result.geometry!.location.lng,
+                ),
+                infoWindow: InfoWindow(title: result.name),
+              ))
           .toList();
     });
-
   }
 }
